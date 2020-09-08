@@ -40,11 +40,15 @@ public class DispatcherServlet extends AbstractServlet {
         super.init(config);
     }
 
+    /**
+     *  根据请求查找对应的处理类
+     *  调用处理类的处理方法，执行请求结果，并返回结果
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
     public void doDispath(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        //根据请求查找对应的处理类
-        //调用处理类的处理方法，执行请求结果，并返回结果
-
         Object handler = null;
         try {
             //获取处理器
@@ -52,7 +56,6 @@ public class DispatcherServlet extends AbstractServlet {
             if (handler == null){
                 return ;
             }
-
             // 处理器适配器，来找到对应的
             HandlerAdapter adapter = getHandlerAdapter(handler);
             if (adapter == null){
@@ -73,16 +76,13 @@ public class DispatcherServlet extends AbstractServlet {
      * @return
      */
     private HandlerAdapter getHandlerAdapter(Object handler) {
-
         if (handlerAdapterList != null && handlerAdapterList.size()>0){
-
             for (HandlerAdapter handlerAdapter : handlerAdapterList) {
                 if (handlerAdapter.supports(handler)){
                     return handlerAdapter;
                 }
             }
         }
-
         return null;
     }
 
@@ -104,7 +104,6 @@ public class DispatcherServlet extends AbstractServlet {
                 }
             }
         }
-
         return null;
     }
 
